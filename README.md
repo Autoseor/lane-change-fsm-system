@@ -103,6 +103,8 @@ The FSM consists of the following states:
 5. **Returning Lane**  
    After passing the obstacle, the vehicle safely returns to the original lane.
 
+<img width="2924" height="1278" alt="image" src="https://github.com/user-attachments/assets/17ec6a25-aff9-4c29-9951-85d831fa2394" />
+
 The vehicle changes lanes when an obstacle is detected and returns to the original lane after passing the obstacle.  
 The FSM transitions between states based on lane detection, vehicle detection, and distance measurements.
 
