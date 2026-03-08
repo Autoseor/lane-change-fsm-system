@@ -3,6 +3,21 @@
 FSM-based autonomous lane change system implemented on a small-scale autonomous vehicle platform using ROS2.
 The system performs lane detection, vehicle detection, and decision-making for overtaking using camera and LiDAR sensors.
 
+## Demo
+
+영상 넣기
+
+The vehicle detects a slower vehicle ahead, performs a lane change to overtake, 
+and safely returns to the original lane using the FSM-based decision logic.
+
+<img width="490" height="364" alt="image" src="https://github.com/user-attachments/assets/0fa16f2a-ba4f-4755-acf9-a878e760b81b" />
+
+YOLO-based Lane and Vehicle Detection
+
+<img width="586" height="310" alt="차선 인식 예시" src="https://github.com/user-attachments/assets/dea590c9-a911-484d-a6c9-e5d0e9bbb99a" />
+
+Example of 2nd lane recognition
+
 ## Overview
 
 This project implements an autonomous lane change system based on a Finite State Machine (FSM).
