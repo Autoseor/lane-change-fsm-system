@@ -101,3 +101,16 @@ The autonomous driving system successfully demonstrated the following capabiliti
 - Obstacle detection using LiDAR and camera
 - Safe lane change using FSM-based decision logic
 - Autonomous return to the original lane
+
+## Repository Structure
+```
+fsm-lane-change-system
+├── src
+│ └── autonomous_lane_change
+│ ├── perception
+│ ├── decision
+│ └── control
+├── launch
+├── config
+└── README.md
+```
