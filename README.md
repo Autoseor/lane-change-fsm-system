@@ -5,7 +5,8 @@ The system performs lane detection, vehicle detection, and decision-making for o
 
 ## Demo
 
-영상 넣기
+![lane change demo](https://github.com/user-attachments/assets/c14e20bb-3c93-4532-9c24-64a4baa22778)
+
 
 The vehicle detects a slower vehicle ahead, performs a lane change to overtake, 
 and safely returns to the original lane using the FSM-based decision logic.
