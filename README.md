@@ -50,6 +50,8 @@ Control
         ↓
 Vehicle (UART Motor Control)
 ```
+<img width="2408" height="1090" alt="image" src="https://github.com/user-attachments/assets/cbe2ebdd-10fa-42fc-b37f-bdef3696d955" />
+
 ---
 
 ## Hardware Platform
