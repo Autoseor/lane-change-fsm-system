@@ -1,22 +1,44 @@
 # FSM-based Autonomous Lane Change System
 
+FSM-based autonomous lane change system implemented on a small-scale autonomous vehicle platform using ROS2.
+The system performs lane detection, vehicle detection, and decision-making for overtaking using camera and LiDAR sensors.
+
 ## Overview
 
-This project implements an autonomous lane change system for a mini electric vehicle.
+This project implements an autonomous lane change system based on a Finite State Machine (FSM).
 
-The system detects lanes and obstacles using camera-based perception and performs safe lane changes using a Finite State Machine (FSM) decision algorithm.
+The system detects lane markings and surrounding vehicles using camera and LiDAR, and makes lane-change decisions to safely overtake slower vehicles.  
+The algorithm was implemented and tested on a small-scale electric vehicle platform equipped with onboard sensors and ROS2-based software modules.
 
-Key features:
+### Key features:
 - Lane detection
-- Obstacle detection using YOLO
+- Vehicle detection using YOLO
 - FSM-based lane change decision
 - Autonomous lane recovery
 
 ---
 
+## System Architecture
+
+Sensor data from the camera and LiDAR are processed through perception modules, and the FSM-based decision module determines the appropriate driving state.  
+The control module then generates commands for the vehicle through UART communication.
+
+```
+Sensor (Camera / LiDAR)
+        ↓
+Perception (Lane Detection, YOLO Detection)
+        ↓
+Decision Making (FSM)
+        ↓
+Control
+        ↓
+Vehicle (UART Motor Control)
+```
+---
+
 ## Hardware Platform
 
-The autonomous driving system is implemented on a mini electric ride-on vehicle platform.
+The autonomous driving system is implemented on a small-scale electric ride-on vehicle platform.
 
 ### Vehicle Platform
 - Ride-on electric vehicle body
@@ -35,27 +57,18 @@ The autonomous driving system is implemented on a mini electric ride-on vehicle 
 
 ---
 
-## System Architecture
-```
-Sensor
-(Camera)
-    ↓
-Perception
-(Lane Detection, YOLO Detection)
-    ↓
-Decision Making
-(FSM)
-    ↓
-Control
-    ↓
-Actuation
-(UART Motor Control)
-```
-## Algorithm
+## Software Framework
 
-The lane change decision is implemented using a Finite State Machine (FSM).
+- ROS2 node-based architecture
+- Perception modules for lane and vehicle detection
+- FSM-based decision-making module
+- Vehicle control interface for steering and speed
 
-States:
+---
+
+## Finite State Machine
+
+The lane change decision is implemented using a five-state Finite State Machine (FSM).
 
 The FSM consists of the following states:
 
@@ -74,32 +87,43 @@ The FSM consists of the following states:
 5. **Returning Lane**  
    After passing the obstacle, the vehicle safely returns to the original lane.
 
-The vehicle changes lanes when an obstacle is detected and returns to the original lane after passing the obstacle.
+The vehicle changes lanes when an obstacle is detected and returns to the original lane after passing the obstacle.  
+The FSM transitions between states based on lane detection, vehicle detection, and distance measurements.
 
 ---
 
 ## Experimental Scenarios
 
-To evaluate the autonomous lane change system, three driving scenarios were designed.
+To evaluate the autonomous lane change system, four driving scenarios were designed.  
 
-1. **Normal Driving**  
-The vehicle follows the lane without obstacles.
+**Scenario 1 - Basic Overtaking**  
+The vehicle ignores vehicles in the adjacent lane and continues driving.  
+If a vehicle is detected ahead in the same lane, it changes lanes and then returns to the original lane.
 
-2. **Obstacle Avoidance**  
-When an obstacle is detected in the current lane, the system performs a lane change maneuver.
+**Scenario 2 - Consecutive Overtaking**  
+The vehicle detects a vehicle ahead in the same lane and changes lanes to overtake.  
+However, if another vehicle is detected ahead in the lane to return to, it overtakes the vehicle as well before returning.
 
-3. **Lane Recovery**  
-After overtaking the obstacle, the vehicle safely returns to the original lane.
+**Scenario 3 - Lane Change with Rear Vehicle**  
+The vehicle detects a vehicle ahead in the same lane.  
+However, if another vehicle is detected approaching from behind in the target lane, it decelerates and waits.  
+After the vehicle passes, it changes lanes and returns.
+
+**Scenario 4 - Lane Change During Overtaking**
+The vehicle detects a vehicle ahead in the same lane and changes lanes. 
+While overtaking, it detects a vehicle ahead in the current lane, so it changes lanes again.  
+Instead of initiating another overtaking maneuver, the system treats this lane change as a return to the original lane.
 
 ---
 
 ## Results
 
-The autonomous driving system successfully demonstrated the following capabilities:
+The system was tested in multiple driving scenarios and demonstrated reliable lane following and autonomous overtaking behavior.  
+The experimental results confirmed that the proposed system can perform the following functions:
 
 - Stable lane following
-- Obstacle detection using LiDAR and camera
-- Safe lane change using FSM-based decision logic
+- Vehicle detection using camera and LiDAR
+- Safe lane changes using FSM-based decision logic
 - Autonomous return to the original lane
 
 ## Repository Structure
@@ -114,3 +138,11 @@ fsm-lane-change-system
 ├── config
 └── README.md
 ```
+
+## Acknowledgement
+
+This project was developed as part of the Autonomous Driving Advanced Course at Sungkyunkwan University.
+
+The experimental platform and basic framework were provided during the course. 
+The perception pipeline using camera and LiDAR, the FSM-based lane-change decision 
+algorithm, and the overall system integration were implemented in this project.
