@@ -54,7 +54,7 @@ Vehicle (UART Motor Control)
 
 ---
 
-## Hardware Platform
+## Hardware Plaform
 
 The autonomous driving system is implemented on a small-scale electric ride-on vehicle platform.
 
@@ -73,6 +73,12 @@ The autonomous driving system is implemented on a small-scale electric ride-on v
 - Camera: YOLO-based lane and vehicle detection. The image Y-coordinate is used to estimate the distance to the detected vehicle.
 - LiDAR: Used for accurate distance measurement to the obstacle vehicle.
 
+### Hardware Stack
+- Platform: Small-scale Electric Vehicle
+- Computing: Laptop
+- Sensors: 2D LiDAR (Obstacle distance measurement) / Monocular Camera (YOLO-based detection)
+- Actuators: Arduino-based DC/Steering Motor Control via UART
+
 ---
 
 ## Software Framework
@@ -81,6 +87,11 @@ The autonomous driving system is implemented on a small-scale electric ride-on v
 - Perception modules for lane and vehicle detection
 - FSM-based decision-making module
 - Vehicle control interface for steering and speed
+
+### Software Stack
+- OS: Ubuntu 22.04 / ROS2 Humble
+- Perception: YOLOv8 (Lane & vehicle detection) / OpenCV (Lane segmentation)
+- Communication: Custom Serial Protocol (ROS2 ↔ Arduino)
 
 ---
 
