@@ -159,15 +159,24 @@ The experimental results confirmed that the proposed system can perform the foll
 
 ## Repository Structure
 ```
-fsm-lane-change-system
-├── src
-│ └── autonomous_lane_change
-│ ├── perception
-│ ├── decision
-│ └── control
-├── launch
-├── config
-└── README.md
+lane-change-fsm-system
+├── code/src/                    # ROS2 기반 자율주행 시스템 소스 코드
+│   ├── camera_perception_pkg/   # 이미지 데이터를 활용한 차선 및 차량 인식
+│   ├── decision_making_pkg/     # FSM 기반 판단부
+│   ├── interfaces_pkg/          # 노드 간 통신을 위한 커스텀 메시지
+│   ├── launch_pkg/              # 다중 노드 실행 및 시스템 오케스트레이션을 위한 런치 파일
+│   ├── lidar_perception_pkg/    # LiDAR 데이터를 활용한 전후방 장애물 유무 감지
+│   └── serial_communication_pkg/ # PC와 차량 플랫폼 간의 UART 통신 인터페이스
+|
+├── docs/                        # 연구 관련 문서 및 학술 활동 자료
+│   ├── ICCE_Conference_Paper/   # IEEE ICCE 국제 학회 채택 논문 및 포스터 자료
+│   └── Industry_Project/        # 산학프로젝트 논문 및 우수 논문 발표 자료
+|
+├── media/                       # 프로젝트 시연 및 시각화 자료
+│   ├── Scenarios/               # 주행 시나리오별 자율주행 시연 주행 영상
+│   └── presentations/           # 산학 프로젝트 성과교류회 발표 영상
+|
+└── README.md                    # 프로젝트 개요, 시스템 아키텍처 등 안내 문서
 ```
 
 ## Acknowledgement
