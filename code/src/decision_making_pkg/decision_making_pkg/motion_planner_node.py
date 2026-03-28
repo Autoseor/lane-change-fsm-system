@@ -85,7 +85,7 @@ class MotionPlanningNode(Node):
         # 차선 변경 횟수
         self.num_lane_changes = 0
         # 경로 기울기
-        self.slope = None
+        self.slope = 0.0
 
         ## 서브스크라이버 설정
         self.lane_sub = self.create_subscription(LaneInfo, self.sub_lane_topic, self.lane_callback, self.qos_profile)
@@ -125,40 +125,41 @@ class MotionPlanningNode(Node):
 
 
     def timer_callback(self):
+        # 초기 데이터 확인
+        if self.lane_data is None or self.car_data is None:
+            return
+
+        # 차선 변수 선언
+        lane_x = self.lane_data.lane1_x if self.target_lane == 0 else self.lane_data.lane2_x
+        
         # 장애물 변수 선언
         front_obs = self.front_lidar_data if self.front_lidar_data is not None else False
         front_left_obs = self.front_left_lidar_data if self.front_left_lidar_data is not None else False
         front_right_obs = self.front_right_lidar_data if self.front_right_lidar_data is not None else False
         rear_left_obs = self.rear_left_lidar_data if self.rear_left_lidar_data is not None else False
         rear_right_obs = self.rear_right_lidar_data if self.rear_right_lidar_data is not None else False
-        # 차선 변수 선언
-        if self.lane_data is not None:
-            lane_x = self.lane_data.lane1_x if self.target_lane == 0 else self.lane_data.lane2_x
-        else:
-            lane_x = 320
 
         self.normal_driving()
-        print(self.current_state)
-
+        self.get_logger().info(f"{self.current_state.name}")
 
         ####################FSM State####################
 
         ## 일반 주행 State
         if self.current_state == State.NORMAL_DRIVING:
             # 전방 차량 감지 시
-            if front_obs and (self.car_data is not None and self.car_data.num_cars != 0):
+            if front_obs and self.car_data.num_cars > 0:
                 current_lane_front_obs = None # 같은 차선 전방 차량만 선택
                 for i in range(self.car_data.num_cars):
                     if lane_x - 100 <= self.car_data.x[i] <= lane_x + 30:
                         current_lane_front_obs = int(i)
                 # 같은 차선 전방 차량 감지 시, 차선 변경 준비 state로 전이
-                if current_lane_front_obs is not None and :
+                if current_lane_front_obs is not None:
                     self.current_state = State.PREPARING_TO_CHANGE_LANE
 
         ## 차선 변경 준비 State
         elif self.current_state == State.PREPARING_TO_CHANGE_LANE:
             # 전방 차량 감지 시
-            if front_obs and self.car_data.num_cars != 0:
+            if front_obs and self.car_data.num_cars > 0:
                 rear_obs = rear_right_obs if self.current_lane == 0 else rear_left_obs
                 front_side_obs = front_right_obs if self.current_lane == 0 else front_left_obs
                 side_lane_front_obs = None # 옆 차선 전방 차량만 선택
